@@ -172,9 +172,60 @@
     }
   });
 </script>
-
+  
+      <script>
+      // Block Ctrl+P
+      document.addEventListener("keydown", function(event) {
+      if (event.ctrlKey && event.key === "p") {
+      event.preventDefault();
+      alert("Printing or PDF conversion is disabled.");
+      }
+      });
+      
+      // Block print dialog (limited effect on mobile)
+      window.onbeforeprint = function() {
+      alert("Printing or PDF conversion is not allowed.");
+      return false;
+      };
+      
+      // Disable right-click
+      document.addEventListener("contextmenu", function(e) {
+      e.preventDefault();
+      alert("Right-click is disabled.");
+      });
+      
+      // Disable text selection
+      document.addEventListener("selectstart", function(e) {
+      e.preventDefault();
+      });
+      
+      // Show content section only when user interacts
+      function revealSection(sectionId) {
+      document.getElementById(sectionId).classList.add("visible");
+      }
+      
+      // Detect potential screenshot attempts (very limited)
+      window.addEventListener("keydown", function(event) {
+      // Detect common screenshot shortcuts (e.g., PrintScreen, Alt+PrintScreen)
+      if (event.key === "PrintScreen" || (event.altKey && event.key === "PrintScreen")) {
+      alert("Screenshots are not allowed.");
+      // Attempt to obscure content
+      document.body.style.display = "none";
+      setTimeout(() => { document.body.style.display = ""; }, 100);
+      }
+      });
+      
+      // Remove overlay when clicked
+      function removeOverlay() {
+      const overlay = document.getElementById("overlay");
+      overlay.style.display = "none";
+      revealSection("section1"); // Show first section
+      }
+      
+      
+      </script>
 </body>
-</html>pt>
+</html>
 
 </body>
 </html>
