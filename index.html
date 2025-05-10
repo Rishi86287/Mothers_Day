@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Mother's Day</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      background: #ffe6f0;
+      font-family: 'Great Vibes', cursive;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-container {
+      perspective: 1500px;
+      width: 90vw;
+      max-width: 400px;
+    }
+
+    .card {
+      width: 100%;
+      aspect-ratio: 2 / 3;
+      position: relative;
+      transform-style: preserve-3d;
+      transform: rotateY(0deg);
+      transition: transform 1.5s ease-in-out;
+      cursor: pointer;
+    }
+
+    .card.open {
+      transform: rotateY(180deg);
+    }
+
+    .front, .back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    }
+
+    .front {
+      background: linear-gradient(#ffb6c1, #fff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2em;
+      color: #a60044;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .back {
+      background: white;
+      transform: rotateY(180deg);
+      overflow-y: auto;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .back h1 {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
+
+    .photos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .photos img {
+      width: 70px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 15px;
+    }
+
+    .flower {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background-image: url('flower.jpg');
+      background-size: cover;
+      pointer-events: none;
+      animation: float 6s linear forwards;
+      z-index: 0;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="card-container">
+  <div class="card" id="card">
+    <div class="front">
+      Tap to Open<br>Happy Mother's Day!
+    </div>
+    <div class="back">
+      <h1>Love You Mom!</h1>
+      <div class="photos">
+        <img src="photo1.jpg" alt="Mom">
+        <img src="photo2.jpg" alt="Mom">
+        <img src="photo3.jpg" alt="Mom">
+        <img src="photo4.jpg" alt="Mom">
+        <img src="photo5.jpg" alt="Mom">
+        <img src="photo6.jpg" alt="Mom">
+        <img src="photo7.jpg" alt="Mom">
+        <img src="photo8.jpg" alt="Mom">
+        <img src="photo9.jpg" alt="Mom">
+        <img src="photo10.jpg" alt="Mom">
+        <img src="photo11.jpg" alt="Mom">
+        <img src="photo12.jpg" alt="Mom">
+        <img src="photo13.jpg" alt="Mom">
+      </div>
+    </div>
+  </div>
+</div>
+
+<audio id="music" src="your-music.mp3" preload="auto"></audio>
+
+
+<script>
+  const card = document.getElementById('card');
+  const music = document.getElementById('music');
+  let isOpen = false;
+  let flowerInterval;
+
+  function spawnFlower() {
+    const flower = document.createElement('div');
+    flower.classList.add('flower');
+    flower.style.left = Math.random() * 100 + 'vw';
+    flower.style.top = '100vh';
+    flower.style.animationDuration = (4 + Math.random() * 4) + 's';
+    document.body.appendChild(flower);
+    setTimeout(() => flower.remove(), 8000);
+  }
+
+  card.addEventListener('click', () => {
+    isOpen = !isOpen;
+    card.classList.toggle('open');
+
+    if (isOpen) {
+      music.play();
+      flowerInterval = setInterval(() => {
+        const numFlowers = Math.max(1, Math.floor((window.innerWidth + window.innerHeight) / 300));
+        for (let i = 0; i < numFlowers; i++) {
+          spawnFlower();
+        }
+      }, 500);
+    } else {
+      music.pause();
+      music.currentTime = 0;
+      clearInterval(flowerInterval);
+    }
+  });
+</script>
+
+</body>
+</html>pt>
+
+</body>
+</html>
